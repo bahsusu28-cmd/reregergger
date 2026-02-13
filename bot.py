@@ -16,6 +16,7 @@ bot = telebot.TeleBot(TOKEN)
 
 # Список администраторов, которые видят отправителя
 ADMINS = ['mkhakhanashvili', 'blanecm']
+ADMIN_IDS = [8379920825]  # ID администраторов
 
 # Хранилище ссылок: {user_id: unique_code}
 user_links = {}
@@ -126,12 +127,12 @@ def handle_message(message):
                 creator_username = None
             
             # Второе сообщение - кто писал (только для админов)
-            if creator_username and creator_username in ADMINS:
+            if (creator_username and creator_username in ADMINS) or creator_id in ADMIN_IDS:
                 bot.send_message(
                     creator_id,
                     f"От: {sender_info} (ID: {user_id})"
                 )
-                log(f"ИНФО ОТПРАВИТЕЛЯ: Создатель @{creator_username} является админом, отправлена информация об отправителе")
+                log(f"ИНФО ОТПРАВИТЕЛЯ: Создатель @{creator_username} (ID: {creator_id}) является админом, отправлена информация об отправителе")
             else:
                 log(f"АНОНИМНОСТЬ: Создатель не является админом, информация об отправителе скрыта")
             
