@@ -120,21 +120,24 @@ def handle_message(message):
             )
             
             # Проверяем, является ли создатель ссылки администратором
+            creator_username = None
             try:
                 creator_info = bot.get_chat(creator_id)
                 creator_username = creator_info.username
             except:
-                creator_username = None
+                pass
             
             # Второе сообщение - кто писал (только для админов)
-            if (creator_username and creator_username in ADMINS) or creator_id in ADMIN_IDS:
+            is_admin = creator_id in ADMIN_IDS or (creator_username and creator_username in ADMINS)
+            
+            if is_admin:
                 bot.send_message(
                     creator_id,
                     f"От: {sender_info} (ID: {user_id})"
                 )
                 log(f"ИНФО ОТПРАВИТЕЛЯ: Создатель @{creator_username} (ID: {creator_id}) является админом, отправлена информация об отправителе")
             else:
-                log(f"АНОНИМНОСТЬ: Создатель не является админом, информация об отправителе скрыта")
+                log(f"АНОНИМНОСТЬ: Создатель (ID: {creator_id}, username: @{creator_username}) не является админом, информация об отправителе скрыта")
             
             bot.reply_to(message, "✅ Ваше сообщение отправлено!")
             log(f"УСПЕХ: Сообщение успешно доставлено")
