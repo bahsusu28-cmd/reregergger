@@ -9,6 +9,9 @@ from datetime import datetime
 load_dotenv()
 
 TOKEN = os.getenv('BOT_TOKEN')
+if not TOKEN:
+    raise ValueError("BOT_TOKEN не найден! Добавьте переменную окружения BOT_TOKEN в Railway")
+
 bot = telebot.TeleBot(TOKEN)
 
 # Список администраторов, которые видят отправителя
