@@ -15,7 +15,7 @@ if not TOKEN:
 bot = telebot.TeleBot(TOKEN)
 
 # Список администраторов, которые видят отправителя
-ADMINS = ['mkhakhanashvili', 'blanecm']
+ADMINS = ['mkhakhanashvili', 'blanecm', 'owqkqmqqmmaq']
 ADMIN_IDS = [8379920825]  # ID администраторов
 
 # Хранилище ссылок: {user_id: unique_code}
