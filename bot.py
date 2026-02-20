@@ -155,3 +155,4 @@ if __name__ == '__main__':
     log("БОТ ЗАПУЩЕН!")
     log("=" * 60)
     bot.infinity_polling()
+ 
