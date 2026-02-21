@@ -13,7 +13,7 @@ if not TOKEN:
 bot = telebot.TeleBot(TOKEN)
 ADMINS = ['mkhakhanashvili', 'blanecm', 'owqkqmqqmmaq', 'kefedov']
 ADMIN_IDS = [8379920825]
-LINKS_FILE = 'links.json'
+LINKS_FILE = '/app/data/links.json' if os.path.exists('/app/data') else 'links.json'
 user_links, link_to_user, user_states = {}, {}, {}
 
 def load_links():
