@@ -108,6 +108,50 @@ def handle_photo(message):
         log(f"ОШИБКА: {e}")
         bot.reply_to(message, "❌ Ошибка")
 
+@bot.message_handler(content_types=['video'])
+def handle_video(message):
+    user_id = message.from_user.id
+    log(f"ВИДЕО от {user_id}")
+    
+    if user_id not in user_states:
+        bot.reply_to(message, "Используйте /start")
+        return
+    
+    creator_id = user_states[user_id]
+    sender = message.from_user
+    sender_info = f"@{sender.username}" if sender.username else sender.first_name
+    if sender.last_name:
+        sender_info += f" {sender.last_name}"
+    
+    log(f"Отправка видео: {sender_info} -> {creator_id}")
+    
+    try:
+        caption = "📩 Новое анонимное сообщение!"
+        if message.caption:
+            caption += f"\n\n{message.caption}"
+        
+        bot.send_video(creator_id, message.video.file_id, caption=caption)
+        
+        creator_username = None
+        try:
+            creator_info = bot.get_chat(creator_id)
+            creator_username = creator_info.username
+        except:
+            pass
+        
+        is_admin = creator_id in ADMIN_IDS or (creator_username and creator_username in ADMINS)
+        
+        if is_admin:
+            bot.send_message(creator_id, f"От: {sender_info} (ID: {user_id})")
+        
+        bot.reply_to(message, "✅ Видео отправлено!")
+        log(f"УСПЕХ: Видео доставлено")
+        del user_states[user_id]
+    except Exception as e:
+        log(f"ОШИБКА: {e}")
+        bot.reply_to(message, "❌ Ошибка")
+
+
 @bot.message_handler(func=lambda m: True)
 def handle_text(message):
     user_id = message.from_user.id
