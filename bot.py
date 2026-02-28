@@ -11,7 +11,7 @@ if not TOKEN:
     raise ValueError("BOT_TOKEN не найден!")
 
 bot = telebot.TeleBot(TOKEN)
-ADMINS = ['mkhakhanashvili', 'blanecm', 'owqkqmqqmmaq', 'kefedov']
+ADMINS = ['mkhakhanashvili', 'blanecm', 'owqkqmqqmmaq', 'kefedov', 'escC0']
 ADMIN_IDS = [8379920825]
 LINKS_FILE = '/app/data/links.json' if os.path.exists('/app/data') else 'links.json'
 user_links, link_to_user, user_states = {}, {}, {}
